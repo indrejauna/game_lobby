@@ -1,0 +1,33 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "games": {
+      ".indexOn": ["status", "creator"],
+      "$gameId": {
+        ".validate": "newData.hasChildren(['type', 'format', 'stake', 'creator', 'status', 'createdAt'])",
+        "type": {
+          ".validate": "newData.isString() && (newData.val() === 'ai_instant' || newData.val() === 'pvp')"
+        },
+        "format": {
+          ".validate": "newData.isNumber() && (newData.val() === 1 || newData.val() === 3 || newData.val() === 5 || newData.val() === 7)"
+        },
+        "stake": {
+          ".validate": "newData.isNumber() && newData.val() >= 100"
+        },
+        "creator": {
+          ".validate": "newData.isString()"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'waiting' || newData.val() === 'in_progress' || newData.val() === 'completed' || newData.val() === 'cancelled' || newData.val() === 'expired')"
+        }
+      }
+    },
+    "status": {
+      "$uid": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}
